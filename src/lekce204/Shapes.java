@@ -128,7 +128,7 @@ class Pentagon extends Shape {
     @Override
     protected void paintShape(Graphics2D g) {
         int xCenter = getX();//stred x
-        int yCenter = getY();// střed Y
+        int yCenter = getY();//stred y
 
         int n = 5;//pocet vrcholu
         int[] xCanvas = new int[n];
@@ -177,6 +177,6 @@ class Star extends Shape {
             xCanvas[i] = xCenter + (int) (r * Math.cos(angle));
             yCanvas[i] = yCenter + (int) (r * Math.sin(angle));
         }
-        g.fillPolygon(xCanvas, yCanvas, n); // vyplněná hvězda
+        g.fillPolygon(xCanvas, yCanvas, n); //vyplnena hvezda
     }
 }
