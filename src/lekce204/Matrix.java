@@ -7,9 +7,11 @@ package lekce204;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JTextField;
-import sun.reflect.FieldInfo;
 
 /**
  *
@@ -17,28 +19,29 @@ import sun.reflect.FieldInfo;
  */
 public class Matrix extends javax.swing.JFrame {
 
-    private int col = 5;
-    private int rows = 5;
-    private JTextField[][] fields = new JTextField[col][rows];//vytvoreni poli 5x5
+    private int col = 5;//sloupce
+    private int rows = 5;//radky
+    private JTextField[][] fields = new JTextField[rows][col];//vytvoreni poli 5x5
     
     /**
      * Creates new form Matrix
      */
     
-    public Matrix() {
+    public Matrix() {//konstruktor
         initComponents();
+        setupMatrix();
     }
     
-    private void setupMatrix(){
-        setLayout(new GridLayout(col, rows));
+    private void setupMatrix(){//nastvaeni matrixu a setup gridu
+        setLayout(new GridLayout(rows, col));
         
-        for(int i = 0; i < 5; i++){
-            for(int j = 0; j < 5; j++){
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < col; j++){
                 JTextField tf = new JTextField();
                 
                 tf.setBackground(Color.WHITE);
-//                tf.addFocusListener(new FieldFocus());
-//                tf.addKeyListener(new FieldKeys());
+                tf.addFocusListener(new FieldFocus());
+                tf.addKeyListener(new FieldKeys());
                 fields[i][j] = tf;
                 add(tf);
             }
@@ -46,8 +49,70 @@ public class Matrix extends javax.swing.JFrame {
         pack();
     }
     
-    private 
+    private class FieldFocus implements FocusListener{//kdyz bunka dostane focus
 
+        @Override//prepsana metoda
+        public void focusGained(FocusEvent e) {//focus je ziskany
+            JTextField tf = (JTextField) e.getSource();//jaka bunka
+            
+            tf.setBackground(Color.YELLOW);//prenstavy barvu na zlutou
+        }
+
+        @Override//prepsana metoda
+        public void focusLost(FocusEvent e) {//focus ztracen
+            JTextField tf = (JTextField) e.getSource();//jaka bunka
+            
+            if(tf.getText().trim().isEmpty()){
+                tf.setBackground(Color.WHITE);
+                tf.setEnabled(true);
+            } else{
+                tf.setBackground(Color.DARK_GRAY);
+                tf.setEnabled(false);
+            }
+        }
+    }
+    
+    private class FieldKeys extends KeyAdapter{
+        @Override
+        public void keyPressed(KeyEvent e) {
+            JTextField source = (JTextField) e.getSource();
+            
+            if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                transposeMatrix();
+            }
+            if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+                resetMatrix(source);
+            }
+        }
+    }
+    
+    private void transposeMatrix(){
+        String[][] values = new String[rows][col];
+        
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < col; j++){
+                values[i][j] = fields[i][j].getText();
+            }
+        }
+        
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < col; j++){
+                fields[i][j].setText(values[j][i]);
+            }
+        }
+    }
+    
+    private void resetMatrix(JTextField keepYellow){
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < col; j++){
+                fields[i][j].setEnabled(true);
+                fields[i][j].setBackground(Color.WHITE);
+                fields[i][j].setText("");
+            }
+        }
+        keepYellow.setBackground(Color.YELLOW);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
