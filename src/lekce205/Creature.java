@@ -11,6 +11,15 @@ import java.util.Date;
  *
  * @author vojtech.holcman.s
  */
-public interface Creatable {
-    Date getCreated();
+public class Creature implements Creatable {
+    private Date created;
+
+    public Creature() {
+        this.created = new Date();
+    }
+
+    @Override
+    public Date getCreated() {
+        return created;
+    }
 }

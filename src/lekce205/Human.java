@@ -5,12 +5,19 @@
  */
 package lekce205;
 
-import java.util.Date;
-
 /**
  *
  * @author vojtech.holcman.s
  */
-public interface Creatable {
-    Date getCreated();
+public class Human extends Creature {
+    private String name;
+
+    public Human(String name) {
+        super();
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
