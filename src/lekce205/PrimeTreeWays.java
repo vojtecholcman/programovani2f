@@ -10,46 +10,46 @@ package lekce205;
  * @author vojta
  */
 public class PrimeTreeWays {
-    
+
     public static void main(String[] args) {
-        if(args.length == 0){
+        if (args.length == 0) {
             runAll(10_000_000);
-        }else{
-            for(int i = 0; i < args.length; i++){
+        } else {
+            for (int i = 0; i < args.length; i++) {
                 int limit = Integer.parseInt(args[i]);
                 runAll(limit);
             }
         }
     }
-    
-    private static void runAll(int limit){
+
+    private static void runAll(int limit) {
         System.out.println("Počet prvočísel od 2 do " + limit + " stanovených");
-        
+
         long t0, t1;
-        
+
         //eratosthenes
         t0 = System.nanoTime();
         int a = EratosthenesWay(limit);
         t1 = System.nanoTime();
-        System.out.println("    Eratostenovým sítem: " + a + " za " + (t1-t0) + " ns");
-        
+        System.out.println("    Eratostenovým sítem: " + a + " za " + (t1 - t0) + " ns");
+
         //postupne testovano
         t0 = System.nanoTime();
         int b = SimpleWay(limit);
         t1 = System.nanoTime();
-        System.out.println("    postupným testováním: " + b + " za " + (t1-t0) + " ns");
-        
+        System.out.println("    postupným testováním: " + b + " za " + (t1 - t0) + " ns");
+
         //vlakna
         int thread = 4;
         t0 = System.nanoTime();
         int c = ThreadsWay(limit, thread);
         t1 = System.nanoTime();
-        System.out.println("    rozdělením do vláken: " + a + " za " + (t1-t0) + " ns");
-        
+        System.out.println("    rozdělením do vláken: " + c + " za " + (t1 - t0) + " ns");
+
         //shoda?
-        if(a==b && b==c){
+        if (a == b && b == c) {
             System.out.println("Všechny tři metody dávají stejné výsledky");
-        }else{
+        } else {
             System.out.println("!!! Metody nedávají stejné výsledky !!!");
         }
         System.out.println("");
@@ -152,19 +152,19 @@ public class PrimeTreeWays {
                     System.out.println("    " + s + " - " + e + ": " + c);
                 }
             });
-        t[k].start();
+            t[k].start();
         }
-        
-        for(int k = 0; k < threads; k++){
-            try{
+
+        for (int k = 0; k < threads; k++) {
+            try {
                 t[k].join();
-            }catch(InterruptedException e){
+            } catch (InterruptedException e) {
                 System.out.println("Vláklno bylo přerušeno: " + e);
             }
         }
-        
+
         int total = 0;
-        for(int j = 0; j< threads; j++){
+        for (int j = 0; j < threads; j++) {
             total += partial[j];
         }
         return total;
