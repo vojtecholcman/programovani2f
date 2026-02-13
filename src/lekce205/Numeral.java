@@ -14,6 +14,8 @@ public class Numeral {
     public static void main(String[] args) {
         System.out.println(toBase(28, 16));
         System.out.println(Horner(3, new double[]{1, 2, 5}));
+        System.out.println(gcd(36, 48));
+        System.out.println(coprimes(10));
     }
 
     public static String toBase(long n, int base) {
@@ -25,8 +27,8 @@ public class Numeral {
             // 0-9 -> '0' - '9'
             // 10-... -> 'A'-...
             char c = fraction <= 9 ? '0' : 'A' - 10;
-            c+=fraction;
-            sb.insert(0,c);
+            c += fraction;
+            sb.insert(0, c);
 //            sb.insert(0, (char) ('0' + (n % base)));
             n /= base;
         }
@@ -42,6 +44,27 @@ public class Numeral {
         }
 
         return c;
+    }
+
+    public static long gcd(long a, long b) {
+        long a1 = a;
+        long b1 = b;
+        while (b1 != 0) {
+            long r = a1 % b1;
+            a1 = b1;
+            b1 = r;
+        }
+        return a1;
+    }
+
+    public static void coprimes(int max) {
+        for (int a = 1; a < max; a++) {
+            for (int b = a + 1; b < max; b++) {
+                if (gcd(a, b) == 1) {
+                    System.out.println(a + " , " + b);
+                }
+            }
+        }
     }
 
 }
