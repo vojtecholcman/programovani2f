@@ -5,6 +5,8 @@
  */
 package lekce205;
 
+import java.util.Arrays;
+
 /**
  *
  * @author vojtech.holcman.s
@@ -12,10 +14,16 @@ package lekce205;
 public class Numeral {
 
     public static void main(String[] args) {
-        System.out.println(toBase(28, 16));
-        System.out.println(Horner(3, new double[]{1, 2, 5}));
-        System.out.println(gcd(36, 48));
-        System.out.println(coprimes(10));
+//        System.out.println(toBase(28, 16));
+//        System.out.println(Horner(3, new double[]{1, 2, 5}));
+//        System.out.println(gcd(36, 48));
+//        coprimes(10);
+//        System.out.println(Arrays.toString(arithmeticSequence(1, 2, 10)));
+//        System.out.println(Arrays.toString(geometricSequence(1, 2, 10)));
+//        System.out.println(Arrays.toString(geometricSequence(1, 1.5, 10)));
+//        System.out.println(Arrays.toString(factorialSequence(20)));
+        printPascalsTriangle(6);
+
     }
 
     public static String toBase(long n, int base) {
@@ -67,4 +75,55 @@ public class Numeral {
         }
     }
 
+    public static double[] arithmeticSequence(double first, double difference, int size) {
+        double[] sequence = new double[size];
+
+        for (int i = 0; i < size; i++) {
+            sequence[i] = first + i * difference;
+        }
+
+        return sequence;
+    }
+
+    public static double[] geometricSequence(double first, double ratio, int size) {
+        double[] sequence = new double[size];
+
+        for (int i = 0; i < size; i++) {
+            sequence[i] = first * Math.pow(ratio, i);
+        }
+
+        return sequence;
+    }
+
+    public static long[] factorialSequence(int size) {
+        long[] sequence = new long[size];
+
+        long current = 1;
+        for (int i = 0; i < size; i++) {
+            if (i == 0) {
+                sequence[i] = 1;
+            } else {
+                current *= i;
+                sequence[i] = current;
+            }
+        }
+
+        return sequence;
+    }
+
+    public static void printPascalsTriangle(int height) {
+        for (int n = 0; n < height; n++) {
+            long value = 1;
+
+            for (int k = 0; k <= n; k++) {
+                System.out.print(value);
+                if (k < n) {
+                    System.out.print(" ");
+                }
+
+                value = value * (n - k) / (k + 1);
+            }
+            System.out.println();
+        }
+    }
 }
