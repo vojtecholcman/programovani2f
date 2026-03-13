@@ -12,7 +12,7 @@ import java.util.Random;
  *
  * @author vojtech.holcman.s
  */
-public class BubbleSort {
+public class InsertionSort {
 
     public static void main(String[] args) {
 //        int a[] = {100, 1, 22, 3};
@@ -26,20 +26,20 @@ public class BubbleSort {
         System.out.println(Arrays.toString(a));
     }
 
-    public static void sort(double[] a) {
-        boolean sorted = false;
-        int last = a.length - 1;
-        while (!sorted) {
-            sorted = true;
-            for (int i = 0; i < last; i++) {
-                if (a[i] > a[i + 1]) {
-                    sorted = false;
-                    double b = a[i];
-                    a[i] = a[i + 1];
-                    a[i + 1] = b;
-                }
+    public static void sort(double[] data) {
+
+        for (int i = 1; i < data.length; i++) {
+
+            double currentValue = data[i];
+            int j = i - 1;
+
+            while (j >= 0 && data[j] > currentValue) {
+                data[j + 1] = data[j];
+                j--;
             }
-            last--;
+
+            data[j + 1] = currentValue;
         }
     }
 }
+

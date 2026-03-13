@@ -12,9 +12,8 @@ import java.util.Random;
  *
  * @author vojtech.holcman.s
  */
-public class BubbleSort {
-
-    public static void main(String[] args) {
+public class QuickSort {
+        public static void main(String[] args) {
 //        int a[] = {100, 1, 22, 3};
         double a[] = new double[100];
         Random r = new Random(0);
@@ -25,21 +24,11 @@ public class BubbleSort {
         sort(a);
         System.out.println(Arrays.toString(a));
     }
-
-    public static void sort(double[] a) {
-        boolean sorted = false;
-        int last = a.length - 1;
-        while (!sorted) {
-            sorted = true;
-            for (int i = 0; i < last; i++) {
-                if (a[i] > a[i + 1]) {
-                    sorted = false;
-                    double b = a[i];
-                    a[i] = a[i + 1];
-                    a[i + 1] = b;
-                }
-            }
-            last--;
-        }
+    
+    public static void sort(double data[]) {
+        sort(data, 0, data.length);
+    }
+    private static void sort(double data[], int left, int right){
+        
     }
 }
