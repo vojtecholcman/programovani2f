@@ -100,13 +100,13 @@ public class Sort {
     }
 
     public static void main(String[] args) {
-        double[] arr1 = {5.4, 2.1, 9.8, 1.0, 3.3};
-        double[] arr2 = {5.4, 2.1, 9.8, 1.0, 3.3};
-        double[] arr3 = {5.4, 2.1, 9.8, 1.0, 3.3};
+        double[] a1 = {16, 10, 12, 8, 1};
+        double[] a2 = {16, 10, 12, 8, 1};
+        double[] a3 = {16, 10, 12, 8, 1};
 
-        System.out.println("Bubble sort:    " + Arrays.toString(bubbleSort(arr1, true)));
-        System.out.println("Selection sort: " + Arrays.toString(selectionSort(arr2, true)));
-        System.out.println("Quick sort:     " + Arrays.toString(quickSort(arr3, true)));
+        System.out.println(Arrays.toString(bubbleSort(a1, true)));
+        System.out.println(Arrays.toString(selectionSort(a2, true)));
+        System.out.println(Arrays.toString(quickSort(a3, true)));
     }
 }
-}
+
