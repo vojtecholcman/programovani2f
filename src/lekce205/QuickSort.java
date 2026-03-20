@@ -70,4 +70,3 @@ public class QuickSort {
         sort(data, i, right);
     }
 }
-
