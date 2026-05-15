@@ -5,8 +5,10 @@
  */
 package lekce206;
 
+import cz.gyarab.util.rmi.client.Connection;
 import cz.gyarab.util.teaser.Hanoi;
 import cz.gyarab.util.teaser.HanoiAnimator;
+import cz.gyarab.util.teaser.HanoiRemote;
 import java.util.Deque;
 import java.util.EnumMap;
 import java.util.LinkedList;
@@ -21,8 +23,9 @@ public class HanoiTowers implements Hanoi {
     private final Map<Place, Deque<Integer>> towers = new EnumMap(Place.class);
 
     public static void main(String[] args) {
-        Hanoi ht = HanoiAnimator.createAnimator(new HanoiTowers());
-        solve(ht, 4);
+        Hanoi ht = new HanoiRemote(new HanoiTowers(), new Connection("192.168.81.19"));
+//        Hanoi ht = HanoiAnimator.createAnimator(new HanoiTowers());
+        solve(ht, 10);
         ht.done();
     }
 
