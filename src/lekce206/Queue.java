@@ -8,6 +8,7 @@ package lekce206;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  *
@@ -23,7 +24,7 @@ public class Queue<E> implements Deque<E> {
         q.addLast("a");
         q.addLast("b");
         q.addLast("c");
-        for(Element<String> e = q.first; e != null; e = e.next){
+        for (Element<String> e = q.first; e != null; e = e.next) {
             System.out.println(e.element);
         }
 //        System.out.println(q.first.element);
@@ -64,9 +65,9 @@ public class Queue<E> implements Deque<E> {
         if (last == null) {
             first = last = new Element<>(e);
         } else {
-            last.prev = new Element<>(e);
-            last.prev.next = last;
-            last = last.prev;
+            last.next = new Element<>(e);
+            last.next.prev = last;
+            last = last.next;
         }
     }
 
@@ -82,12 +83,32 @@ public class Queue<E> implements Deque<E> {
 
     @Override
     public E removeFirst() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (first == null) {
+            throw new NoSuchElementException();
+        }
+        E val = first.element;
+        first = first.next;
+        if (first == null) {
+            last = null;
+        } else {
+            first.prev = null;
+        }
+        return val;
     }
 
     @Override
     public E removeLast() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (last == null) {
+            return null;
+        }
+        E val = last.element;
+        last = last.prev;
+        if (last == null) {
+            first = null;
+        } else {
+            last.next = null;
+        }
+        return val;
     }
 
     @Override
@@ -132,7 +153,8 @@ public class Queue<E> implements Deque<E> {
 
     @Override
     public boolean add(E e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        addFirst(e);
+        return true;
     }
 
     @Override
@@ -142,7 +164,7 @@ public class Queue<E> implements Deque<E> {
 
     @Override
     public E remove() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return removeLast();
     }
 
     @Override
@@ -162,12 +184,12 @@ public class Queue<E> implements Deque<E> {
 
     @Override
     public void push(E e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        addFirst(e);
     }
 
     @Override
     public E pop() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return removeFirst();
     }
 
     @Override
@@ -177,12 +199,32 @@ public class Queue<E> implements Deque<E> {
 
     @Override
     public boolean contains(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Element<E> q = first;
+        while (q != last) {
+            if (q.element == o) {
+                return true;
+            }
+            q = q.next;
+        }
+        return false;
+
+        // pomoci for-cyklu
+//        for (Element<E> q = first; q != null; q = q.next) {
+//            if (q.element == o) {
+//                return true;
+//            }
+//        }
+//        return false;
     }
 
     @Override
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int size = 0;
+        for (Element<E> q = first; q != null; q = q.next) {
+            size++;
+        }
+        return size;
+
     }
 
     @Override
@@ -197,7 +239,7 @@ public class Queue<E> implements Deque<E> {
 
     @Override
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return first == null;
     }
 
     @Override
@@ -232,6 +274,6 @@ public class Queue<E> implements Deque<E> {
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        first = last = null;
     }
 }
