@@ -1,3 +1,5 @@
+package lekce205;
+
 class Digit {
     public static int reverse(int number) {
         boolean negative;

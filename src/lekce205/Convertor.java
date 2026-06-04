@@ -1,3 +1,5 @@
+package lekce205;
+
 class Convertor {
     private final char[] digits;
 

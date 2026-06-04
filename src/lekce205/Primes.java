@@ -1,3 +1,5 @@
+package lekce205;
+
 
 class Primes {
 
