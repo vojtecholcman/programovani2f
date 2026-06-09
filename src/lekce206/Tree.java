@@ -5,71 +5,46 @@
  */
 package lekce206;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 /**
  *
- * @author vojtech.holcman.s
+ * @author admin
  */
-public class Tree<E> {
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+public class Tree {
 
     public static void main(String[] args) {
-        Tree<String> koren = new Tree<>("Koren");
-        Tree<String> daniel = koren.add("Daniel");
-        koren.add("Vasek");
-        koren.add("Vilda");
-
-        daniel.add("adoptovanej1");
-        daniel.add("adoptovanej2");
-        System.out.println(koren.toString());
-        System.out.println(koren.contains("Vilda"));
-        System.out.println(koren.contains("Krystof"));
+        Tree leaf1 = new Tree(10);
+        Tree leaf2 = new Tree(20);
+        Tree leaf3 = new Tree(30);
+        Tree branch1 = new Tree(-50, leaf1, leaf2);
+        Tree branch2 = new Tree(15, leaf3);
+        Tree branch3 = new Tree(25, branch2);
+        Tree root = new Tree(0, branch1, branch3);
+        System.out.println(root.getMaxValue());
+        System.out.println(branch1.getMaxValue());
     }
-    private final E value;
-    private final Tree<E> parent;
-    private final Set<Tree<E>> children = new LinkedHashSet<>();
+    private final double value;
+    private final Set<Tree> children = new HashSet<>();
 
-    public Tree(E value) {
-        this(value, null);
-    }
-
-    public Tree(E value, Tree<E> parent) {
+    public Tree(double value) {
         this.value = value;
-        this.parent = parent;
     }
 
-    public Tree<E> add(E value) {
-        Tree tree = new Tree<>(value, this);
-        this.children.add(tree);
-        return tree;
+    public Tree(double value, Tree... children) {
+        this.value = value;
+        this.children.addAll(Arrays.asList(children));
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder(String.valueOf(value));
-        if (!children.isEmpty()) {
-            sb.append(": {");
-            for (Tree<E> c : children) {
-                sb.append(c);
-                sb.append(", ");
-            }
-            sb.delete(sb.length() - 2, sb.length());
-            sb.append("}");
+    public double getMaxValue() {
+        // -------------- zde odstrihnout --------------------------------------
+        double max = value;
+        for (Tree child : children) {
+            max = Math.max(max, child.getMaxValue());
         }
-        return sb.toString();
-    }
-
-    public boolean contains(E value) {
-        if (this.value == value) {
-            return true;
-        }
-        for (Tree<E> c : children) {
-            if (c.contains(value)) {
-                return true;
-            }
-        }
-        return false;
+        return max;
+        // -------------- zde odstrihnout --------------------------------------
     }
 }

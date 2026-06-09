@@ -1,0 +1,75 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package lekce206;
+
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+/**
+ *
+ * @author vojtech.holcman.s
+ */
+public class Tree2<E> {
+
+    public static void main(String[] args) {
+        Tree2<String> koren = new Tree2<>("Koren");
+        Tree2<String> daniel = koren.add("Daniel");
+        koren.add("Vasek");
+        koren.add("Vilda");
+
+        daniel.add("adoptovanej1");
+        daniel.add("adoptovanej2");
+        System.out.println(koren.toString());
+        System.out.println(koren.contains("Vilda"));
+        System.out.println(koren.contains("Krystof"));
+    }
+    private final E value;
+    private final Tree2<E> parent;
+    private final Set<Tree2<E>> children = new LinkedHashSet<>();
+
+    public Tree2(E value) {
+        this(value, null);
+    }
+
+    public Tree2(E value, Tree2<E> parent) {
+        this.value = value;
+        this.parent = parent;
+    }
+
+    public Tree2<E> add(E value) {
+        Tree2 tree = new Tree2<>(value, this);
+        this.children.add(tree);
+        return tree;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(String.valueOf(value));
+        if (!children.isEmpty()) {
+            sb.append(": {");
+            for (Tree2<E> c : children) {
+                sb.append(c);
+                sb.append(", ");
+            }
+            sb.delete(sb.length() - 2, sb.length());
+            sb.append("}");
+        }
+        return sb.toString();
+    }
+
+    public boolean contains(E value) {
+        if (this.value == value) {
+            return true;
+        }
+        for (Tree2<E> c : children) {
+            if (c.contains(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
